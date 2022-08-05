@@ -110,13 +110,13 @@ const NavMenuItens = ({ items }: NavMenuItemI) => {
 
   return (
     <>
-      {items.map((item) => {
+      {items.map((item, i) => {
         return (
-          <VStack alignItems={'flex-start'} w={'100%'}>
+          <VStack key={i} alignItems={'flex-start'} w={'100%'}>
             <SectionTitle title={item.section} />
-            {item.links.map((link) => {
+            {item.links.map((link, i) => {
               return (
-                <NextLink href={link.url} passHref>
+                <NextLink key={i} href={link.url} passHref>
                   <Link
                     _hover={{ backgroundColor: indigoDark.indigo3 }}
                     w={'100%'}
@@ -183,6 +183,7 @@ const Navbar = () => {
               ref={btnRef}
               onClick={onOpen}
               background="none"
+              variant="icon"
               justifySelf={'self-start'}
             >
               <Icon as={HamburgerMenuIcon} fontSize={20} />

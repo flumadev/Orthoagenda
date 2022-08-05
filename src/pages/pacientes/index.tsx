@@ -76,6 +76,14 @@ const Home: NextPage = () => {
 
   function handleAddPatient(e: any) {
     e.preventDefault();
+
+    console.log(
+      new Date().toLocaleDateString('pt-BR', {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+      })
+    );
   }
 
   return (
@@ -113,9 +121,9 @@ const Home: NextPage = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {users.map((user) => {
+              {users.map((user, i) => {
                 return (
-                  <Tr>
+                  <Tr key={i}>
                     <Td>
                       <Avatar src={user.avatar} />
                     </Td>
@@ -177,7 +185,11 @@ const Home: NextPage = () => {
               <Flex gap={4}>
                 <FormControl mt={4}>
                   <FormLabel>Nascimento</FormLabel>
-                  <Input placeholder="Nascimento" />
+                  <Input
+                    placeholder="Nascimento"
+                    type="date"
+                    max={'04-30-2017'}
+                  />
                 </FormControl>
                 <FormControl mt={4}>
                   <FormLabel>Telefone</FormLabel>
