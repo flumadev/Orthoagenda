@@ -77,7 +77,7 @@ const Home: NextPage = () => {
   const initialRef = useRef(null);
   const finalRef = useRef(null);
 
-  function validateDate(value) {
+  function validateDate(value: any) {
     const date = new Date(value)
       .toLocaleDateString('pt-BR', {
         year: 'numeric',
@@ -95,7 +95,7 @@ const Home: NextPage = () => {
     }
   }
 
-  function handleAddPatient(values, actions) {
+  function handleAddPatient(values: any, actions: any) {
     console.log(values);
     console.log(actions);
 
@@ -190,17 +190,21 @@ const Home: NextPage = () => {
               {(props) => (
                 <Form>
                   <Field name="name">
-                    {({ field, form }) => (
-                      <FormControl>
-                        <FormLabel>Nome</FormLabel>
-                        <Input {...field} placeholder="Nome completo" />
-                      </FormControl>
-                    )}
+                    {({ field, form }: any) => {
+                      console.log(field, form);
+
+                      return (
+                        <FormControl>
+                          <FormLabel>Nome</FormLabel>
+                          <Input {...field} placeholder="Nome completo" />
+                        </FormControl>
+                      );
+                    }}
                   </Field>
 
                   <Flex gap={4}>
                     <Field name="CPF">
-                      {({ field, form }) => (
+                      {({ field, form }: any) => (
                         <FormControl mt={4}>
                           <FormLabel>CPF</FormLabel>
                           <Input {...field} placeholder="CPF" />
@@ -209,7 +213,7 @@ const Home: NextPage = () => {
                     </Field>
 
                     <Field name="RG">
-                      {({ field, form }) => (
+                      {({ field, form }: any) => (
                         <FormControl mt={4}>
                           <FormLabel>RG</FormLabel>
                           <Input {...field} placeholder="RG" />
@@ -220,7 +224,7 @@ const Home: NextPage = () => {
 
                   <Flex gap={4}>
                     <Field name="birthdate" validate={validateDate}>
-                      {({ field, form }) => (
+                      {({ field, form }: any) => (
                         <FormControl mt={4}>
                           <FormLabel>Nascimento</FormLabel>
                           <Input
@@ -232,7 +236,7 @@ const Home: NextPage = () => {
                       )}
                     </Field>
                     <Field name="phone">
-                      {({ field, form }) => (
+                      {({ field, form }: any) => (
                         <FormControl mt={4}>
                           <FormLabel>Telefone</FormLabel>
                           <Input {...field} placeholder="Telefone" />
@@ -241,7 +245,7 @@ const Home: NextPage = () => {
                     </Field>
                   </Flex>
                   <Field name="address">
-                    {({ field, form }) => (
+                    {({ field, form }: any) => (
                       <FormControl mt={4}>
                         <FormLabel>Endereço</FormLabel>
                         <Input {...field} placeholder="Endereço" />
@@ -249,7 +253,7 @@ const Home: NextPage = () => {
                     )}
                   </Field>
                   <Field name="plan">
-                    {({ field, form }) => (
+                    {({ field, form }: any) => (
                       <FormControl mt={4}>
                         <FormLabel>Plano</FormLabel>
                         <Input {...field} placeholder="Plano" />
@@ -258,7 +262,7 @@ const Home: NextPage = () => {
                   </Field>
                   {underAge && (
                     <Field name="responsible">
-                      {({ field, form }) => (
+                      {({ field, form }: any) => (
                         <FormControl mt={4}>
                           <FormLabel>Nome do responsável</FormLabel>
                           <Input {...field} placeholder="Nome do responsável" />
