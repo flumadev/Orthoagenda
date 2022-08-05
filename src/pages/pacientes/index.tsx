@@ -4,6 +4,7 @@ import {
   Button,
   Flex,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Icon,
   Input,
@@ -34,10 +35,11 @@ import {
   PlusIcon,
 } from '@radix-ui/react-icons';
 import { NextPage } from 'next';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Header } from '../../components';
 import Layout from '../../components/layout.component';
 import NextLink from 'next/link';
+import { Field, Form, Formik } from 'formik';
 
 const users = [
   {
@@ -70,20 +72,37 @@ const users = [
 
 const Home: NextPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [underAge, setUnderAge] = useState(false);
 
   const initialRef = useRef(null);
   const finalRef = useRef(null);
 
-  function handleAddPatient(e: any) {
-    e.preventDefault();
-
-    console.log(
-      new Date().toLocaleDateString('pt-BR', {
+  function validateDate(value) {
+    const date = new Date(value)
+      .toLocaleDateString('pt-BR', {
         year: 'numeric',
         month: 'numeric',
         day: 'numeric',
       })
-    );
+      .split('/')[2];
+
+    const currentYear = new Date().getFullYear();
+
+    if (currentYear - parseInt(date) < 18) {
+      setUnderAge(true);
+    } else {
+      setUnderAge(false);
+    }
+  }
+
+  function handleAddPatient(values, actions) {
+    console.log(values);
+    console.log(actions);
+
+    setTimeout(() => {
+      alert(JSON.stringify(values, null, 2));
+      actions.setSubmitting(false);
+    }, 1000);
   }
 
   return (
@@ -155,7 +174,6 @@ const Home: NextPage = () => {
       </Layout>
 
       <Modal
-        initialFocusRef={initialRef}
         finalFocusRef={finalRef}
         isOpen={isOpen}
         onClose={onClose}
@@ -164,59 +182,103 @@ const Home: NextPage = () => {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Novo paciente</ModalHeader>
+          <ModalBody>
+            <Formik
+              initialValues={{}}
+              onSubmit={(values, actions) => handleAddPatient(values, actions)}
+            >
+              {(props) => (
+                <Form>
+                  <Field name="name">
+                    {({ field, form }) => (
+                      <FormControl>
+                        <FormLabel>Nome</FormLabel>
+                        <Input {...field} placeholder="Nome completo" />
+                      </FormControl>
+                    )}
+                  </Field>
+
+                  <Flex gap={4}>
+                    <Field name="CPF">
+                      {({ field, form }) => (
+                        <FormControl mt={4}>
+                          <FormLabel>CPF</FormLabel>
+                          <Input {...field} placeholder="CPF" />
+                        </FormControl>
+                      )}
+                    </Field>
+
+                    <Field name="RG">
+                      {({ field, form }) => (
+                        <FormControl mt={4}>
+                          <FormLabel>RG</FormLabel>
+                          <Input {...field} placeholder="RG" />
+                        </FormControl>
+                      )}
+                    </Field>
+                  </Flex>
+
+                  <Flex gap={4}>
+                    <Field name="birthdate" validate={validateDate}>
+                      {({ field, form }) => (
+                        <FormControl mt={4}>
+                          <FormLabel>Nascimento</FormLabel>
+                          <Input
+                            {...field}
+                            placeholder="Nascimento"
+                            type="date"
+                          />
+                        </FormControl>
+                      )}
+                    </Field>
+                    <Field name="phone">
+                      {({ field, form }) => (
+                        <FormControl mt={4}>
+                          <FormLabel>Telefone</FormLabel>
+                          <Input {...field} placeholder="Telefone" />
+                        </FormControl>
+                      )}
+                    </Field>
+                  </Flex>
+                  <Field name="address">
+                    {({ field, form }) => (
+                      <FormControl mt={4}>
+                        <FormLabel>Endereço</FormLabel>
+                        <Input {...field} placeholder="Endereço" />
+                      </FormControl>
+                    )}
+                  </Field>
+                  <Field name="plan">
+                    {({ field, form }) => (
+                      <FormControl mt={4}>
+                        <FormLabel>Plano</FormLabel>
+                        <Input {...field} placeholder="Plano" />
+                      </FormControl>
+                    )}
+                  </Field>
+                  {underAge && (
+                    <Field name="responsible">
+                      {({ field, form }) => (
+                        <FormControl mt={4}>
+                          <FormLabel>Nome do responsável</FormLabel>
+                          <Input {...field} placeholder="Nome do responsável" />
+                        </FormControl>
+                      )}
+                    </Field>
+                  )}
+                  <ModalFooter>
+                    <Button variant="outline" mr="3" onClick={onClose}>
+                      Cancelar
+                    </Button>
+                    <Button isLoading={props.isSubmitting} type="submit">
+                      Salvar
+                    </Button>
+                  </ModalFooter>
+                </Form>
+              )}
+            </Formik>
+          </ModalBody>
           <ModalCloseButton />
-          <form onSubmit={handleAddPatient}>
-            <ModalBody pb={6}>
-              <FormControl>
-                <FormLabel>Nome</FormLabel>
-                <Input ref={initialRef} placeholder="Nome completo" />
-              </FormControl>
-
-              <Flex gap={4}>
-                <FormControl mt={4}>
-                  <FormLabel>CPF</FormLabel>
-                  <Input placeholder="CPF" />
-                </FormControl>
-                <FormControl mt={4}>
-                  <FormLabel>RG</FormLabel>
-                  <Input placeholder="RG" />
-                </FormControl>
-              </Flex>
-              <Flex gap={4}>
-                <FormControl mt={4}>
-                  <FormLabel>Nascimento</FormLabel>
-                  <Input
-                    placeholder="Nascimento"
-                    type="date"
-                    max={'04-30-2017'}
-                  />
-                </FormControl>
-                <FormControl mt={4}>
-                  <FormLabel>Telefone</FormLabel>
-                  <Input placeholder="Telefone" />
-                </FormControl>
-              </Flex>
-              <FormControl mt={4}>
-                <FormLabel>Endereço</FormLabel>
-                <Input placeholder="Endereço" />
-              </FormControl>
-              <FormControl mt={4}>
-                <FormLabel>Plano</FormLabel>
-                <Input placeholder="Plano" />
-              </FormControl>
-              <FormControl mt={4}>
-                <FormLabel>Nome do responsável</FormLabel>
-                <Input placeholder="Nome do responsável" />
-              </FormControl>
-            </ModalBody>
-
-            <ModalFooter>
-              <Button type="submit" colorScheme="blue" mr={3}>
-                Save
-              </Button>
-              <Button onClick={onClose}>Cancel</Button>
-            </ModalFooter>
-          </form>
         </ModalContent>
       </Modal>
     </>
