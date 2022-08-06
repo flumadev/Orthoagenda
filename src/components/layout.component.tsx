@@ -28,19 +28,12 @@ import {
   CalendarIcon,
   EnvelopeClosedIcon,
   FileIcon,
+  GearIcon,
   HamburgerMenuIcon,
 } from '@radix-ui/react-icons';
 import NextLink from 'next/link';
-import { useRouter } from 'next/router';
 import React, { useRef } from 'react';
-
-interface SectionTitleI {
-  title: string;
-}
-
-interface NavMenuItemI {
-  items: Array<NavMenuItemArrayI>;
-}
+import NavMenuItems from './navMenuItems.component';
 
 interface NavMenuItemArrayI {
   section: string;
@@ -97,69 +90,36 @@ const teste: Array<NavMenuItemArrayI> = [
   },
 ];
 
-const SectionTitle = ({ title }: SectionTitleI) => {
-  return (
-    <Text fontSize={14} fontWeight="medium" color={'gray.500'} mt="3">
-      {title}
-    </Text>
-  );
-};
-
-const NavMenuItens = ({ items }: NavMenuItemI) => {
-  const currentPage = useRouter().pathname;
-
-  return (
-    <>
-      {items.map((item, i) => {
-        return (
-          <VStack key={i} alignItems={'flex-start'} w={'100%'}>
-            <SectionTitle title={item.section} />
-            {item.links.map((link, i) => {
-              return (
-                <NextLink key={i} href={link.url} passHref>
-                  <Link
-                    _hover={{ backgroundColor: indigoDark.indigo3 }}
-                    w={'100%'}
-                    h="32px"
-                    borderRadius={6}
-                    backgroundColor={
-                      currentPage === link.url ? indigoDark.indigo3 : ''
-                    }
-                  >
-                    <Flex
-                      alignItems={'center'}
-                      justifyContent="flex-start"
-                      gap={'2'}
-                      px="2"
-                      _hover={{ color: 'white' }}
-                      color={currentPage === link.url ? 'white' : ''}
-                      height="100%"
-                    >
-                      <Icon as={link.icon} />
-                      {link.name}
-                    </Flex>
-                  </Link>
-                </NextLink>
-              );
-            })}
-          </VStack>
-        );
-      })}
-    </>
-  );
-};
-
 const NavMenu = () => {
   return (
     <>
-      <VStack py={9} px={5} w="210px" h={'100vh'} alignItems={'flex-start'}>
-        <WrapItem alignItems={'center'} gap="3" mb={20} alignSelf="center">
-          <Avatar name="Dan Abrahmov" src="/pp.jpg" />
-          <Text fontSize={18} fontWeight="medium">
-            Paçoca
-          </Text>
-        </WrapItem>
-        <NavMenuItens items={teste} />
+      <VStack
+        py={9}
+        px={5}
+        w="210px"
+        h={'100vh'}
+        alignItems={'flex-start'}
+        justifyContent="space-between"
+      >
+        <Box>
+          <WrapItem alignItems={'center'} gap="3" mb={20} alignSelf="center">
+            <Avatar name="Dan Abrahmov" src="/pp.jpg" />
+            <Text fontSize={18} fontWeight="medium">
+              Paçoca
+            </Text>
+          </WrapItem>
+          <NavMenuItems items={teste} />
+        </Box>
+        <NextLink href={'/config/'}>
+          <Button
+            variant={'icon'}
+            rightIcon={<GearIcon />}
+            borderRadius="24"
+            fontWeight={'normal'}
+          >
+            Configurações
+          </Button>
+        </NextLink>
       </VStack>
     </>
   );
