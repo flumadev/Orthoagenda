@@ -1,12 +1,10 @@
 import {
   Avatar,
-  Box,
   Button,
   Flex,
   Text,
   Grid,
   FormControl,
-  FormErrorMessage,
   FormLabel,
   Input,
   Select,
@@ -17,9 +15,8 @@ import ConfigLayout from '../../../components/config.layout.component';
 
 function Index() {
   const [name, setName] = useState('');
-  const [specialty, setSpecialty] = useState('');
 
-  const handleNameChange = (value: stirng) => {
+  const handleNameChange = (value: string) => {
     setName(value);
   };
 

@@ -49,3 +49,7 @@ input[type='file']::-webkit-file-upload-button:hover {
   background-color: hsl(228, 43.3%, 17.5%);
   color: white;
 }
+
+textarea {
+  resize: none;
+}

@@ -20,7 +20,8 @@ import {
   TrashIcon,
 } from '@radix-ui/react-icons';
 import type { NextPage } from 'next';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useCallback, useRef, useState } from 'react';
 import { Header } from '../components';
 import Layout from '../components/layout.component';
 
@@ -53,6 +54,7 @@ const Home: NextPage = () => {
             justifySelf={'flex-end'}
             w="min-content"
             rightIcon={<FileTextIcon />}
+            onClick={}
           >
             Imprimir
           </Button>

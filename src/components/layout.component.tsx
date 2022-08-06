@@ -30,6 +30,7 @@ import {
   FileIcon,
   GearIcon,
   HamburgerMenuIcon,
+  ReaderIcon,
 } from '@radix-ui/react-icons';
 import NextLink from 'next/link';
 import React, { useRef } from 'react';
@@ -65,22 +66,17 @@ const teste: Array<NavMenuItemArrayI> = [
         name: 'Pacientes',
         url: '/pacientes',
       },
-
       {
         icon: FileIcon,
         name: 'Receituário',
         url: '/receituario',
       },
       {
-        icon: EnvelopeClosedIcon,
+        icon: ReaderIcon,
         name: 'Atestado',
         url: '/atestado',
       },
-      {
-        icon: EnvelopeClosedIcon,
-        name: 'Recomendações',
-        url: '/recomendacoes',
-      },
+
       {
         icon: EnvelopeClosedIcon,
         name: 'Orçamento',
