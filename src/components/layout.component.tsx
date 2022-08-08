@@ -92,7 +92,7 @@ const NavMenu = () => {
       <VStack
         py={9}
         px={5}
-        w="210px"
+        w={['100%', '210px']}
         h={'100vh'}
         alignItems={'flex-start'}
         justifyContent="space-between"
@@ -111,6 +111,7 @@ const NavMenu = () => {
             variant={'icon'}
             rightIcon={<GearIcon />}
             borderRadius="24"
+            w="100%"
             fontWeight={'normal'}
           >
             Configurações
