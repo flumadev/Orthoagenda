@@ -22,7 +22,7 @@ import {
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useCallback, useRef, useState } from 'react';
-import { Header } from '../components';
+import { Header, WhiteBox } from '../components';
 import Layout from '../components/layout.component';
 
 const Home: NextPage = () => {
@@ -31,14 +31,19 @@ const Home: NextPage = () => {
 
   function handleAddMedicine(e: any) {
     e.preventDefault();
-    const data = e.target[0].value;
+    const data = e.target[0].value as String;
 
     if (e.target[0].value === '' || e.target[0].value === undefined) {
       setError('Medicamento não pode estar vazio');
       return;
     }
 
-    setMedicines([...medicines, data]);
+    if (medicines.includes(data.toLowerCase())) {
+      setError('Medicamento já adicionado');
+      return;
+    }
+
+    setMedicines([...medicines, data.toLowerCase()]);
   }
 
   function handleRemoveMedicine(name: String) {
@@ -52,33 +57,38 @@ const Home: NextPage = () => {
           <Box></Box>
           <Button
             justifySelf={'flex-end'}
-            w="min-content"
+            w={['100%', 'min-content']}
             rightIcon={<FileTextIcon />}
           >
             Imprimir
           </Button>
         </Header>
-        <Flex bg={'white'} borderRadius="6" p={8} justifyContent="center">
+        <WhiteBox justifyContent="center">
           <Flex
-            w={'600px'}
+            w={['100%', '100%', '600px']}
             flexDirection="column"
             overflowY={'auto'}
             maxHeight="600px"
-            pr={8}
+            pr={[4, 8]}
           >
-            <Flex gap={4}>
+            <Flex gap={[0, 4]} flexDirection={['column', 'row']}>
               <FormControl mt={4}>
                 <FormLabel>Paciente</FormLabel>
                 <Input placeholder="Paciente" />
               </FormControl>
-              <FormControl mt={4} w="200px">
+              <FormControl mt={4} w={['100%', '200px']}>
                 <FormLabel>Data</FormLabel>
                 <Input placeholder="Data" type="date" />
               </FormControl>
             </Flex>
             <form onSubmit={handleAddMedicine}>
               <FormControl mt={4} isInvalid={!!error}>
-                <Flex gap={4} justifyContent="center" alignItems="flex-end">
+                <Flex
+                  gap={4}
+                  justifyContent="center"
+                  alignItems="flex-end"
+                  flexDirection={['column', 'row']}
+                >
                   <Box w={'100%'}>
                     <FormLabel>Medicamento</FormLabel>
                     <Input
@@ -86,20 +96,26 @@ const Home: NextPage = () => {
                       onChange={() => setError('')}
                     />
                   </Box>
-                  <Button type="submit">Adicionar</Button>
+                  <Button w={['100%', 'min-content']} type="submit">
+                    Adicionar
+                  </Button>
                 </Flex>
                 {!!error && <FormErrorMessage>{error}</FormErrorMessage>}
               </FormControl>
             </form>
-            {medicines.map((medicine) => {
+            {medicines.map((medicine, i) => {
               return (
-                <>
+                <Box key={i}>
                   <Flex
                     justifyContent={'space-between'}
                     alignItems="center"
                     mt="4"
                   >
-                    <Text fontSize={'md'} fontWeight="bold">
+                    <Text
+                      fontSize={'md'}
+                      fontWeight="bold"
+                      textTransform={'capitalize'}
+                    >
                       {medicine}
                     </Text>
                     <Menu>
@@ -128,7 +144,7 @@ const Home: NextPage = () => {
                     </Menu>
                   </Flex>
 
-                  <Flex gap={4}>
+                  <Flex gap={[0, 4]} flexDirection={['column', 'row']}>
                     <FormControl mt={4}>
                       <FormLabel>Concentração</FormLabel>
                       <Input placeholder="500mg" />
@@ -146,11 +162,11 @@ const Home: NextPage = () => {
                     <FormLabel>Posologia</FormLabel>
                     <Input placeholder="Tomar 9,5 ml de 12/12 horas durante 10 (dez) dias." />
                   </FormControl>
-                </>
+                </Box>
               );
             })}
           </Flex>
-        </Flex>
+        </WhiteBox>
       </Layout>
     </>
   );

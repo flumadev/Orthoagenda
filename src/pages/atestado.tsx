@@ -22,7 +22,7 @@ import {
 } from '@radix-ui/react-icons';
 import type { NextPage } from 'next';
 import { useCallback, useRef, useState } from 'react';
-import { ComponentToPrint, Header } from '../components';
+import { ComponentToPrint, Header, WhiteBox } from '../components';
 import Layout from '../components/layout.component';
 
 import { useReactToPrint } from 'react-to-print';
@@ -47,14 +47,14 @@ const Home: NextPage = () => {
           <Box></Box>
           <Button
             justifySelf={'flex-end'}
-            w="min-content"
+            w={['100%', 'min-content']}
             rightIcon={<FileTextIcon />}
             onClick={() => handlePrint()}
           >
             Imprimir
           </Button>
         </Header>
-        <Flex bg={'white'} borderRadius="6" p={8} justifyContent="center">
+        <WhiteBox>
           <Flex
             w={['100%', '100%', '600px']}
             flexDirection="column"
@@ -81,7 +81,7 @@ const Home: NextPage = () => {
               <Textarea placeholder="CID" />
             </FormControl>
           </Flex>
-        </Flex>
+        </WhiteBox>
       </Layout>
       <ComponentToPrint ref={componentRef} text={'aaki'} />
     </>

@@ -17,7 +17,8 @@ function Header({ title, children }: { title: string; children?: any }) {
         {children && (
           <Grid
             width={'100%'}
-            templateColumns={'1fr 1fr'}
+            templateColumns={['1fr', '1fr', '1fr 1fr']}
+            gap={[8, 0, 0]}
             templateRows={'1fr'}
             mb={8}
           >

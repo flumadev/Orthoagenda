@@ -233,10 +233,10 @@ const Layout = ({ children }: any) => {
           gridRowStart={2}
           gridRowEnd={-1}
           bg={indigo.indigo2}
-          p={8}
+          p={[4, 8]}
         >
           <Grid
-            templateRows={'150px  1fr'}
+            templateRows={['min-content 1fr', '150px  1fr']}
             templateColumns="1fr"
             height={'100%'}
             gap="12px"

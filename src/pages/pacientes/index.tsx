@@ -18,6 +18,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Show,
   Table,
   TableContainer,
   Tbody,
@@ -36,7 +37,7 @@ import {
 } from '@radix-ui/react-icons';
 import { NextPage } from 'next';
 import { useRef, useState } from 'react';
-import { Header } from '../../components';
+import { Header, WhiteBox } from '../../components';
 import Layout from '../../components/layout.component';
 import NextLink from 'next/link';
 import { Field, Form, Formik } from 'formik';
@@ -110,19 +111,17 @@ const Home: NextPage = () => {
         <Header title="Pacientes">
           <InputGroup
             justifyContent={'center'}
-            w="540px"
+            w={['100%', '540px']}
             borderColor={indigoDark.indigo3}
           >
-            <>
-              <InputLeftElement>
-                <MagnifyingGlassIcon />
-              </InputLeftElement>
-              <Input type="text" placeholder="Nome do paciente" />
-            </>
+            <InputLeftElement>
+              <MagnifyingGlassIcon />
+            </InputLeftElement>
+            <Input type="text" placeholder="Nome do paciente" />
           </InputGroup>
           <Button
             rightIcon={<PlusIcon />}
-            w="min-content"
+            w={['100%', 'min-content']}
             justifySelf={'flex-end'}
             onClick={onOpen}
           >
@@ -130,50 +129,56 @@ const Home: NextPage = () => {
           </Button>
         </Header>
 
-        <TableContainer bg={'white'} borderRadius="6">
-          <Table>
-            <Thead>
-              <Tr>
-                <Th></Th>
-                <Th>Nome</Th>
-                <Th>Telefone</Th>
-                <Th>Email</Th>
-                <Th>Plano</Th>
-                <Th></Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {users.map((user, i) => {
-                return (
-                  <Tr key={i}>
-                    <Td>
-                      <Avatar src={user.avatar} />
-                    </Td>
-                    <Td>{user.name}</Td>
-                    <Td>{user.phone}</Td>
-                    <Td>{user.email}</Td>
-                    <Td>{user.plan}</Td>
-                    <Td>
-                      <NextLink href={`pacientes/${user.id}`} passHref>
-                        <Link
-                          display="flex"
-                          w="35px"
-                          h="35px"
-                          justifyContent="center"
-                          alignItems="center"
-                          borderRadius={4}
-                          _hover={{ bg: indigoDark.indigo3, color: 'white' }}
-                        >
-                          <Icon as={ChevronRightIcon} fontSize={24} />
-                        </Link>
-                      </NextLink>
-                    </Td>
-                  </Tr>
-                );
-              })}
-            </Tbody>
-          </Table>
-        </TableContainer>
+        <WhiteBox>
+          <TableContainer w={'100%'}>
+            <Table>
+              <Thead>
+                <Tr>
+                  <Th></Th>
+                  <Th>Nome</Th>
+                  <Show above="lg">
+                    <Th>Telefone</Th>
+                    <Th>Email</Th>
+                    <Th>Plano</Th>
+                  </Show>
+                  <Th></Th>
+                </Tr>
+              </Thead>
+              <Tbody w={'100%'}>
+                {users.map((user, i) => {
+                  return (
+                    <Tr key={i}>
+                      <Td px={'0'}>
+                        <Avatar src={user.avatar} />
+                      </Td>
+                      <Td>{user.name}</Td>
+                      <Show above="lg">
+                        <Td>{user.phone}</Td>
+                        <Td>{user.email}</Td>
+                        <Td>{user.plan}</Td>
+                      </Show>
+                      <Td>
+                        <NextLink href={`pacientes/${user.id}`} passHref>
+                          <Link
+                            display="flex"
+                            w="35px"
+                            h="35px"
+                            justifyContent="center"
+                            alignItems="center"
+                            borderRadius={4}
+                            _hover={{ bg: indigoDark.indigo3, color: 'white' }}
+                          >
+                            <Icon as={ChevronRightIcon} fontSize={24} />
+                          </Link>
+                        </NextLink>
+                      </Td>
+                    </Tr>
+                  );
+                })}
+              </Tbody>
+            </Table>
+          </TableContainer>
+        </WhiteBox>
       </Layout>
 
       <Modal
