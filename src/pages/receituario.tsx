@@ -54,7 +54,6 @@ const Home: NextPage = () => {
             justifySelf={'flex-end'}
             w="min-content"
             rightIcon={<FileTextIcon />}
-            onClick={}
           >
             Imprimir
           </Button>

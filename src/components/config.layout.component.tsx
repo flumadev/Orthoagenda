@@ -70,7 +70,7 @@ const teste: Array<NavMenuItemArrayI> = [
       {
         icon: ReaderIcon,
         name: 'Dados',
-        url: '/atestado',
+        url: '/config/clinic',
       },
       {
         icon: EnvelopeClosedIcon,

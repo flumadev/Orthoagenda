@@ -33,7 +33,7 @@ import {
   ReaderIcon,
 } from '@radix-ui/react-icons';
 import NextLink from 'next/link';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import NavMenuItems from './navMenuItems.component';
 
 interface NavMenuItemArrayI {
@@ -97,7 +97,7 @@ const NavMenu = () => {
         alignItems={'flex-start'}
         justifyContent="space-between"
       >
-        <Box>
+        <Box w={'100%'}>
           <WrapItem alignItems={'center'} gap="3" mb={20} alignSelf="center">
             <Avatar name="Dan Abrahmov" src="/pp.jpg" />
             <Text fontSize={18} fontWeight="medium">
@@ -125,11 +125,31 @@ const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef: any = useRef();
 
-  function getCurrentHour(): String {
+  const [currentTime, setCurrentTime] = useState('');
+
+  function getCurrentHour() {
     var today = new Date();
-    var time = today.getHours() + ':' + today.getMinutes();
+
+    const hour =
+      today.getHours().toString().length === 1
+        ? '0' + today.getHours().toString()
+        : today.getHours().toString();
+
+    const minutes =
+      today.getMinutes().toString().length === 1
+        ? '0' + today.getMinutes().toString()
+        : today.getMinutes().toString();
+
+    var time = hour + ':' + minutes;
     return time;
   }
+
+  useEffect(() => {
+    setCurrentTime(getCurrentHour());
+    setInterval(() => {
+      setCurrentTime(getCurrentHour());
+    }, 1000);
+  }, []);
   return (
     <>
       <Grid templateColumns="repeat(2, 1fr)" px={4} height={'60px'}>
@@ -154,7 +174,7 @@ const Navbar = () => {
           gridColumnEnd={'3'}
         >
           <Text fontSize={24} fontWeight="bold">
-            {getCurrentHour()}
+            {currentTime}
           </Text>
           <Icon as={BellIcon} fontSize={20} />
         </Flex>

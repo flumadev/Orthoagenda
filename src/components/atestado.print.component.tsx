@@ -1,5 +1,7 @@
-import { Text } from '@chakra-ui/react';
+import { Box, Text } from '@chakra-ui/react';
 import * as React from 'react';
+
+import style from '../styles/printable.module.css';
 
 type Props = {
   text?: string;
@@ -15,7 +17,9 @@ export class ComponentToPrint extends React.PureComponent<Props, State> {
 
     return (
       <>
-        <Text>Alo</Text>
+        <Box className={style.printable} w="100vw">
+          <Text>{this.props.text}</Text>
+        </Box>
       </>
     );
   }
