@@ -10,10 +10,119 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Clinic {
+  id String @id
 
+  address       String
+  name          String
+  phone         String
+  cellphone     String
+  email         String
+  CNPJ          String
+  RT            String
+  CRO_RT        String
+  Patients      Patient[]
+  Professionals Professional[]
+}
 
-
-model Paciente {
+model Professional {
   id String @id @default(uuid())
-  clinicaId String
+
+  name            String
+  specialty       String
+  CPF             String  @unique
+  CRO             String  @unique
+  address         String?
+  email           String
+  cellphone       String?
+  profile_picture String?
+
+  login    String
+  password String
+
+  role       Role         @default(DENTIST)
+  Scheduling Scheduling[]
+
+  Clinic   Clinic @relation(fields: [clinicId], references: [id])
+  clinicId String
+}
+
+enum Role {
+  ADMIN
+  DENTIST
+  SECRETARY
+}
+
+model Patient {
+  id String @id @default(uuid())
+
+  name         String
+  CPF          String         @unique
+  RG           String?        @unique
+  birthdate    String
+  phone        String
+  address      String?
+  plan         String
+  responsible  String?
+  Prescription Prescription[]
+  Statement    Statement[]
+  Scheduling   Scheduling[]
+  Budget       Budget[]
+
+  Clinic   Clinic? @relation(fields: [clinicId], references: [id])
+  clinicId String?
+}
+
+model Prescription {
+  id String @id @default(uuid())
+
+  date      String
+  medicines String
+
+  patient   Patient @relation(fields: [patientId], references: [id])
+  patientId String
+}
+
+model Statement {
+  id String @id @default(uuid())
+
+  date String
+  days String
+  CID  String
+
+  patient   Patient @relation(fields: [patientId], references: [id])
+  patientId String
+}
+
+model Scheduling {
+  id String @id @default(uuid())
+
+  procedure   String
+  date        String
+  time        String
+  observation String?
+
+  patient   Patient @relation(fields: [patientId], references: [id])
+  patientId String
+
+  professional   Professional @relation(fields: [professionalId], references: [id])
+  professionalId String
+}
+
+model Procedures {
+  id String @id @default(uuid())
+
+  name  String @unique
+  price Float
+}
+
+model Budget {
+  id String @id @default(uuid())
+
+  description String
+  date        String
+  treatments  String
+
+  patient   Patient @relation(fields: [patientId], references: [id])
+  patientId String
 }
