@@ -74,7 +74,6 @@ const Home: NextPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [underAge, setUnderAge] = useState(false);
 
-  const initialRef = useRef(null);
   const finalRef = useRef(null);
 
   function validateDate(value: any) {
@@ -114,8 +113,12 @@ const Home: NextPage = () => {
             w="540px"
             borderColor={indigoDark.indigo3}
           >
-            <InputLeftElement children={<MagnifyingGlassIcon />} />
-            <Input type="text" placeholder="Nome do paciente" />
+            <>
+              <InputLeftElement>
+                <MagnifyingGlassIcon />
+              </InputLeftElement>
+              <Input type="text" placeholder="Nome do paciente" />
+            </>
           </InputGroup>
           <Button
             rightIcon={<PlusIcon />}

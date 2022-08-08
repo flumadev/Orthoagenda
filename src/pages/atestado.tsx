@@ -28,14 +28,11 @@ import Layout from '../components/layout.component';
 import { useReactToPrint } from 'react-to-print';
 
 const Home: NextPage = () => {
-  const [medicines, setMedicines] = useState([] as Array<String>);
-  const [error, setError] = useState('');
-
   const componentRef = useRef(null);
 
   const reactToPrintContent = useCallback(() => {
     return componentRef.current;
-  }, [componentRef.current]);
+  }, []);
 
   const handlePrint = useReactToPrint({
     content: reactToPrintContent,
