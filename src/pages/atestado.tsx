@@ -56,17 +56,17 @@ const Home: NextPage = () => {
         </Header>
         <Flex bg={'white'} borderRadius="6" p={8} justifyContent="center">
           <Flex
-            w={'600px'}
+            w={['100%', '100%', '600px']}
             flexDirection="column"
             overflowY={'auto'}
             maxHeight="600px"
-            pr={8}
+            pr={[0, 8]}
           >
             <FormControl mt={4}>
               <FormLabel>Paciente</FormLabel>
               <Input placeholder="Paciente" />
             </FormControl>
-            <Flex gap={4}>
+            <Flex gap={4} flexDirection={['column', 'row']}>
               <FormControl mt={4}>
                 <FormLabel>Data do atestado</FormLabel>
                 <Input placeholder="Data do atestado" />
