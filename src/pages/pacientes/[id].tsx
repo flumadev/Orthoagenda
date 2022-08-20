@@ -23,7 +23,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Layout>
-        <Header title="Agenda" />
+        <Header title="Nome do paciente" />
         <Grid
           gridTemplateColumns={['1fr', '0.5fr 1fr']}
           gridTemplateRows={'1fr'}
